@@ -1,9 +1,15 @@
-'use client';
+"use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
-export default function Home() {
 
-const [coinData, setCoinData] = useState([]);
+type Coin = {
+  id: string;
+  name: string;
+  symbol: string;
+};
+
+export default function Home() {
+  const [coinData, setCoinData] = useState<Coin[]>([]);
 
   async function getCoinData() {
     const url = "https://api.coingecko.com/api/v3/coins/markets";
@@ -15,8 +21,7 @@ const [coinData, setCoinData] = useState([]);
 
     try {
       const response = await axios(url, options);
-      console.log(response.data);
-      return response.data;
+      setCoinData(response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error(
@@ -31,8 +36,15 @@ const [coinData, setCoinData] = useState([]);
 
   return (
     <div className="flex flex-col w-full min-h-screen justify-center items-center">
-      Hello
-      <button onClick={()=> getCoinData()} > Get Coins</button>
+      {coinData.map((coin) => (
+        <div
+          key={coin.id}
+          className="flex flex-col w-full justify-center items-center"
+        >
+          {coin.id}
+        </div>
+      ))}
+      <button onClick={() => getCoinData()}> Get Coins</button>
     </div>
   );
 }
