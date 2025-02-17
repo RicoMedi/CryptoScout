@@ -36,17 +36,20 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col w-full min-h-screen justify-center items-center">
-      <Nav/>
-      {coinData.map((coin) => (
-        <div
-          key={coin.id}
-          className="flex flex-col w-full justify-center items-center"
-        >
-          {coin.id}
-        </div>
-      ))}
-      <button onClick={() => getCoinData()}> Get Coins</button>
+    <div className="flex flex-col w-full min-h-screen">
+      <Nav />
+
+      <div className="flex flex-col flex-1 justify-center items-center">
+        {coinData.map((coin) => (
+          <div
+            key={coin.id}
+            className="flex flex-col w-full justify-center items-center"
+          >
+            {coin.id}
+          </div>
+        ))}
+        <button onClick={() => getCoinData()}>Get Coins</button>
+      </div>
     </div>
   );
 }
