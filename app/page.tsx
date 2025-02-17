@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Coin = {
   id: string;
@@ -36,6 +36,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-full min-h-screen justify-center items-center">
+      
       {coinData.map((coin) => (
         <div
           key={coin.id}
