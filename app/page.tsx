@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { useState } from "react";
+import Nav from "./nav/layout";
 
 type Coin = {
   id: string;
@@ -36,7 +37,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-full min-h-screen justify-center items-center">
-      
+      <Nav/>
       {coinData.map((coin) => (
         <div
           key={coin.id}
