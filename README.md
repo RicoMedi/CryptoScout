@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# README for Crypto Tracker Project
 
-## Getting Started
+## Overview
 
-First, run the development server:
+The Crypto Tracker project allows users to view and track cryptocurrency prices, along with detailed coin information and price trends. The project uses the CoinGecko API to fetch coin data and price trends.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Displays a list of cryptocurrencies that can be searched by name.
+- Clicking a coin displays detailed information, including the current price, description, and a price trend chart for the last 7 days.
+- Dynamic API endpoints to fetch coin details and price chart data using dynamic IDs.
+- Uses Chart.js to visualize the price trends.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tools & Technologies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js for building the application.
+- Chart.js for visualizing the price trend charts.
+- Axios for making API requests.
+- Tailwind CSS for styling the application.
+- TypeScript for type safety.
 
-## Learn More
+## API Endpoints
 
-To learn more about Next.js, take a look at the following resources:
+- **Coin List API**: Fetches a list of all coins using `getCoinsData`.
+- **Coin Detail API**: Fetches detailed data for a specific coin using `getCoinData` (based on dynamic ID).
+- **Coin Chart API**: Fetches price trend data for a specific coin using `getCoinChartData` (based on dynamic ID).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Using CoinGecko
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+We use the CoinGecko API to retrieve up-to-date information on various cryptocurrencies. CoinGecko provides a comprehensive and free API that allows us to access data such as current prices, historical price trends, market capitalization, and more. By leveraging CoinGecko, we ensure that our users have access to reliable and accurate cryptocurrency data.

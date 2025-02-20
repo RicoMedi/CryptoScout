@@ -1,32 +1,65 @@
-"use client";
-
+'use client'
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+} from "chart.js";
 import { getCoinsData } from "../lib/getCoinsData";
 import { getCoinData } from "../lib/getCoinData";
+import { getCoinChartData } from "../lib/getCoinChartData";
+
+// Note to self: This is a client component, so we need to register the ChartJS components
+// and use the useEffect hook to fetch the data.
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+interface ChartData {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    borderColor: string;
+    backgroundColor: string;
+    tension: number;
+    pointRadius: number;
+  }[];
+}
 
 type Coin = {
   id: string;
   name: string;
   symbol: string;
-  image: {
-    large: string;
-  };
-  market_data: {
-    current_price: {
-      usd: number;
-    };
-  };
+  image: { large: string };
+  market_data: { current_price: { usd: number } };
+  description: { en: string };
 };
 
 export default function CoinList() {
   const [coinData, setCoinData] = useState<Coin[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [coin, setCoin] = useState<Coin | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>(""); // Added state for search term
-useEffect(() => {
+  const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [chartData, setChartData] = useState<ChartData | null>(null); 
+
+  useEffect(() => {
     fetchCoins();
   }, []);
+
   async function fetchCoins() {
     try {
       const data = await getCoinsData();
@@ -35,63 +68,94 @@ useEffect(() => {
       setError("Failed to fetch coins.");
     }
   }
-
+// here im fetching the coin details and the chart data
   async function fetchCoinDetails(coinId: string) {
     try {
       const data = await getCoinData(coinId);
       setCoin(data);
-      console.log(data);
+      fetchMarketChart(coinId);
     } catch {
       setError("Failed to fetch coin details.");
     }
   }
+// note to self : this is the function that fetches the chart data
+// and sets the chart data state
+// and then we can use the chart data state to render the chart
+  async function fetchMarketChart(coinId: string) {
+    const prices = await getCoinChartData(coinId);
+    if (prices && prices.length > 0) {
+      setChartData({
+        labels: prices.map((price: [number, number]) =>
+          new Date(price[0]).toLocaleDateString()
+        ),
+        datasets: [
+          {
+            label: "Price (USD)",
+            data: prices.map((price: [number, number]) => price[1]),
+            borderColor: "rgb(75, 192, 192)",
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+            tension: 0.3,
+            pointRadius: 2,
+          },
+        ],
+      });
+    }
+  }
 
-  // Filter coins based on the search term
   const filteredCoins = coinData.filter((coin) =>
     coin.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="flex flex-col w-full min-h-screen justify-center items-center border-2 border-red-500">
-      {error && <p className="text-red-500">{error}</p>}
-      {coin && (
-        <Image
-          src={coin.image.large}
-          alt="Coin Image"
-          width={200}
-          height={200}
-          className="p-4"
-        />
-      )}
-      <div className="flex flex-row gap-4">
-        <div className="bg-gray500/100 w-[250px] h-[250px] flex justify-center items center">
-          {" "}
-          Card 1
-        </div>
-        <div className="bg-gray500/100 w-[250px] h-[250px] flex justify-center items center">
-          {" "}
-          Card 2
-        </div>
-        <div className="bg-gray500/100 w-[250px] h-[250px] flex justify-center items center">
-          {" "}
-          Card 3
-        </div>
-      </div>
+    <div className="flex flex-col w-full min-h-screen items-center bg-gray-100 p-6 border-x-8 border-green-300">
+      <header className="w-full max-w-3xl bg-white shadow-md p-6 rounded-lg mb-6 text-center">
+        <h1 className="text-2xl font-bold text-gray-800">Crypto Tracker</h1>
+      </header>
 
       <input
         type="text"
         placeholder="Search by Coin Name"
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)} // Update search term
-        className="mt-4 px-4 py-2 rounded-md border-2 border-blue-300"
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="w-full max-w-md px-4 py-2 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-400 mb-6"
       />
-     
-      <div className="overflow-scroll max-h-96 no-scrollbars w-1/2 mt-4 border-4 border-s-black border-e-black">
+
+      {coin && (
+        <div className="w-full max-w-3xl bg-white p-6 rounded-lg shadow-md mb-6">
+          <div className="flex flex-col items-center">
+            <Image
+              src={coin.image.large}
+              alt="Coin Image"
+              width={150}
+              height={150}
+            />
+            <h2 className="text-xl font-semibold mt-2">{coin.name}</h2>
+            <p className="text-gray-600">
+              ${coin.market_data.current_price.usd}
+            </p>
+          </div>
+          <div className="mt-4 p-4 bg-gray-50 rounded-md max-h-48 overflow-auto">
+            <p className="text-sm text-gray-700">
+              {coin.description.en || "No description available."}
+            </p>
+          </div>
+          {chartData && (
+            <div className="mt-6 p-4 bg-white shadow rounded-md">
+              <h3 className="text-lg font-semibold mb-2">
+                Price Trend (7 Days)
+              </h3>
+              <Line data={chartData} />
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className="w-full max-w-3xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filteredCoins.map((coin) => (
           <div
-            onClick={() => fetchCoinDetails(coin.id)}
             key={coin.id}
-            className="p-4 font-semibold text-black hover:bg-gray-300 transition cursor-pointer rounded-md active:scale-90"
+            onClick={() => fetchCoinDetails(coin.id)}
+            className="p-4 bg-white shadow-md rounded-md text-center hover:bg-gray-200 transition cursor-pointer"
           >
             {coin.name}
           </div>
