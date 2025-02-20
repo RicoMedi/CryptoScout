@@ -55,6 +55,7 @@ export default function CoinList() {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [chartData, setChartData] = useState<ChartData | null>(null); 
+  const [activeCoin, setActiveCoin] = useState<string | null>(null);
 
   useEffect(() => {
     fetchCoins();
@@ -74,6 +75,7 @@ export default function CoinList() {
       const data = await getCoinData(coinId);
       setCoin(data);
       fetchMarketChart(coinId);
+      setActiveCoin(coinId);
     } catch {
       setError("Failed to fetch coin details.");
     }
@@ -135,7 +137,7 @@ export default function CoinList() {
             </p>
           </div>
           <div className="mt-4 p-4 bg-gray-50 rounded-md max-h-48 overflow-auto">
-            <p className="text-sm text-gray-700">
+            <p className="text-md text-gray-700 border-4 p-3">
               {coin.description.en || "No description available."}
             </p>
           </div>
@@ -155,7 +157,8 @@ export default function CoinList() {
           <div
             key={coin.id}
             onClick={() => fetchCoinDetails(coin.id)}
-            className="p-4 bg-white shadow-md rounded-md text-center hover:bg-gray-200 transition cursor-pointer"
+            className={`p-4 bg-white shadow-md rounded-md text-center hover:bg-gray-200 transition cursor-pointer ${
+              activeCoin === coin.id ? "bg-gray-200" : ""}`}
           >
             {coin.name}
           </div>
