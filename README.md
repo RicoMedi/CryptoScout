@@ -1,4 +1,5 @@
-# README for Crypto Tracker Project
+# README for CryptoScout 
+
 
 ## Overview
 
