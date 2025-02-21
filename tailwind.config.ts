@@ -1,3 +1,4 @@
+import { heroui } from "@heroui/theme";
 import type { Config } from "tailwindcss";
 
 export default {
@@ -5,14 +6,23 @@ export default {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@heroui/theme/dist/components/pagination.js",
   ],
+
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        blueprint: "#131a33", // Midnight blue
+        background: "e0e1dd", 
+        accent: "#131a33", // Midnight blue
+        primary: "#ffd700", // Gold
+        secondary: "#4db5ff", // Electric blue
+        text: "#e0e0e0", // Soft white
+      },
+      borderColor: {
+        DEFAULT: "#131a33", // Midnight blue
       },
     },
   },
-  plugins: [],
+  plugins: [heroui()],
 } satisfies Config;
