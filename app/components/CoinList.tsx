@@ -67,7 +67,7 @@ export default function CoinList() {
               width={200}
               height={200}
             />
-            <h2 className="text-2xl font-semibold mt-2">{coin.name}</h2>
+            <h2 className="text-3xl font-semibold mt-2">{coin.name}</h2>
             <p className="text-primary text-2xl font-bold">
               ${coin.market_data.current_price.usd}
             </p>
