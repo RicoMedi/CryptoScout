@@ -88,10 +88,10 @@ export default function CoinList() {
         )}
       </div>
 
-      <div className="flex w-full h-full bg-white p-8 rounded-xl shadow-lg">
+      <div className="flex w-full h-full bg-white p-8 rounded-xl shadow-lg gap-6">
         {coin && (
-          <div className="w-1/3 flex flex-col items-start gap-6">
-            {/* Coin Image */}
+          <div className="w-1/3 flex flex-col items-center gap-6">
+           
             <Image
               src={coin.image.large}
               alt="Coin Image"
@@ -100,12 +100,12 @@ export default function CoinList() {
               className="rounded-lg shadow-lg"
             />
 
-            {/* Coin Price */}
+           
             <p className="text-primary text-4xl font-bold">
               ${coin.market_data.current_price.usd}
             </p>
 
-            {/* Description Box */}
+          
             <div className="p-6 bg-background rounded-lg overflow-auto w-full border border-gray-300 shadow-md max-h-[200px]">
               <p className="text-lg text-gray-800">
                 {coin.description.en || "No description available."}
