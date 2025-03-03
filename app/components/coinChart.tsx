@@ -75,7 +75,7 @@ export default function CoinChart({ coinId }: { coinId: string }) {
 
   return (
     <div>
-      <Line data={chartData} />
+      <Line data={chartData}/>
     </div>
   );
 }

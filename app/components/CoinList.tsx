@@ -28,11 +28,11 @@ export default function CoinList() {
   }, []);
 
   useEffect(() => {
-  if(coinData.length >0){
-    fetchCoinDetails(coinData[0].id);
-    setActiveCoin(coinData[0].id);
-  }
-},[coinData]);
+    if (coinData.length > 0) {
+      fetchCoinDetails(coinData[0].id);
+      setActiveCoin(coinData[0].id);
+    }
+  }, [coinData]);
   async function fetchCoins() {
     try {
       const data = await getCoinsData();
@@ -57,57 +57,70 @@ export default function CoinList() {
   );
 
   return (
-    <div className=" flex justify-evenly w-full h-screen p-6 bg-blueprint" >
-      <div className="w-1/2 text-black p-6 rounded-lg shadow-md bg-white flex justify-evenly">
+    <div className="flex flex-col w-full h-screen p-6 bg-blueprint">
+      <div className="flex justify-end mb-6 relative">
+        <input
+          type="text"
+          placeholder="Search by Coin Name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-secondary text-black w-[300px] shadow-sm"
+        />
+        {searchTerm && (
+          <div className="absolute top-full right-0 bg-white border border-gray-300 rounded-lg shadow-lg w-[300px] mt-2 p-3">
+            {filteredCoins.length > 0 ? (
+              filteredCoins.map((coin) => (
+                <div
+                  key={coin.id}
+                  onClick={() => {
+                    fetchCoinDetails(coin.id);
+                    setSearchTerm("");
+                  }}
+                  className="cursor-pointer hover:bg-gray-100 p-2 rounded-md transition"
+                >
+                  {coin.name}
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500">No results found</p>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="flex w-full h-full bg-white p-8 rounded-xl shadow-lg">
         {coin && (
-          <div className="flex flex-col items-center gap-4">
+          <div className="w-1/3 flex flex-col items-start gap-6">
+            {/* Coin Image */}
             <Image
               src={coin.image.large}
               alt="Coin Image"
               width={200}
               height={200}
+              className="rounded-lg shadow-lg"
             />
-            <h2 className="text-3xl font-semibold mt-2">{coin.name}</h2>
-            <p className="text-primary text-3xl font-bold">
+
+            {/* Coin Price */}
+            <p className="text-primary text-4xl font-bold">
               ${coin.market_data.current_price.usd}
             </p>
-            <div className="mt-4 p-4 bg-background rounded-md overflow-auto">
-              <p className="text-lg border-4 border-background p-3">
+
+            {/* Description Box */}
+            <div className="p-6 bg-background rounded-lg overflow-auto w-full border border-gray-300 shadow-md max-h-[200px]">
+              <p className="text-lg text-gray-800">
                 {coin.description.en || "No description available."}
               </p>
             </div>
-            <div className="w-full h-[400px]">
-              <CoinChart coinId={coin.id} />
-            </div>
           </div>
         )}
-      </div>
 
-      <div className="w-1/2  bg-white p-6 rounded-lg shadow-md ml-6  text-text">
-        <div className="pb-6">
-          <input
-            type="text"
-            placeholder="Search by Coin Name"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-4 rounded-md border-2 border- focus:outline-none focus:ring-2 focus:ring-secondary text-background text-black"
-          />
-        </div>
-
-        <div className="h-[80%] overflow-auto no-scrollbars mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredCoins.map((coin) => (
-            <div
-              key={coin.id}
-              onClick={() => fetchCoinDetails(coin.id)}
-              className={` bg-accent w-full h-[80px] p-4 shadow-md rounded-md text-center items-center flex justify-center hover:bg-secondary transition cursor-pointer ${
-                activeCoin === coin.id
-                  ? "bg-primary text-black"
-                  : "bg-background text-white" 
-              }`}
-            >
-              {coin.name}
+        {/* Large Coin Chart */}
+        <div className="w-2/3 flex justify-center items-center">
+          {coin && (
+            <div className="w-full h-[800px] bg-gray-50 rounded-lg shadow-lg p-4">
+              <CoinChart coinId={coin.id} />
             </div>
-          ))}
+          )}
         </div>
       </div>
     </div>
