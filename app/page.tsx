@@ -18,7 +18,7 @@ export default function Home() {
   const [coinData, setCoinData] = useState<Coin[]>([]);
   const [coin, setCoin] = useState<Coin | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [activeCoin, setActiveCoin] = useState<string | null>(null);
+
 
   useEffect(() => {
     fetchCoins();
@@ -27,7 +27,7 @@ export default function Home() {
   useEffect(() => {
     if (coinData.length > 0) {
       fetchCoinDetails(coinData[0].id);
-      setActiveCoin(coinData[0].id);
+     
     }
   }, [coinData]);
 
@@ -44,7 +44,7 @@ export default function Home() {
     try {
       const data = await getCoinData(coinId);
       setCoin(data);
-      setActiveCoin(coinId);
+      
     } catch {
       console.error("Failed to fetch coin details.");
     }
