@@ -14,7 +14,7 @@ export default function Nav({
   fetchCoinDetails,
 }: NavProps) {
   return (
-    <header className="w-full p-6 mb-6 bg-white shadow-md flex justify-between items-center">
+    <header className="w-full p-6 mb-6 bg-black shadow-md flex justify-between items-center">
       <h1 className="text-3xl font-semibold text-background">CryptoScout</h1>
       
       <div className="relative">
