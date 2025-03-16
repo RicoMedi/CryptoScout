@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import { getCoinChartData } from "../lib/getCoinChartData";
 import { Line } from "react-chartjs-2";
@@ -31,23 +31,21 @@ interface ChartData {
     data: number[];
     borderColor: string;
     backgroundColor: string;
-    fill: boolean;
     tension: number;
     pointRadius: number;
   }[];
 }
 
 export default function CoinChart({ coinId }: { coinId: string }) {
-    
   const [chartData, setChartData] = useState<ChartData | null>(null);
 
   useEffect(() => {
     fetchMarketChart(coinId);
   }, [coinId]);
 
-// note to self : this is the function that fetches the chart data
-// and sets the chart data state
-// and then we can use the chart data state to render the chart
+  // note to self : this is the function that fetches the chart data
+  // and sets the chart data state
+  // and then we can use the chart data state to render the chart
   async function fetchMarketChart(coinId: string) {
     const prices = await getCoinChartData(coinId);
     if (prices && prices.length > 0) {
@@ -60,7 +58,6 @@ export default function CoinChart({ coinId }: { coinId: string }) {
             label: "Price (USD)",
             data: prices.map((price: [number, number]) => price[1]),
             borderColor: "rgb(75, 192, 192)",
-            fill:false,
             backgroundColor: "rgba(75, 192, 192, 0.2)",
             tension: 0.3,
             pointRadius: 2,
@@ -70,14 +67,22 @@ export default function CoinChart({ coinId }: { coinId: string }) {
     }
   }
 
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false, // Ensures the chart scales with the container
+  };
 
   if (!chartData) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <Line data={chartData}/>
+    <div
+      style={{ width: "100%", height: "400px" }}
+      className="bg-background rounded-lg shadow-md p-4"
+    >
+      <Line data={chartData} options={options} />
     </div>
-  )
+  );
 }
+// Note to self: The chart is responsive and maintains its aspect ratio
