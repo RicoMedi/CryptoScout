@@ -17,7 +17,7 @@ type CoinListProps = {
 
 export default function CoinList({ coin }: CoinListProps) {
   return (
-    <div className="flex flex-col items-center w-full h-full bg-white p-8 rounded-xl shadow-lg gap-6">
+    <div className="flex flex-col items-center w-full h-svh bg-white p-8 rounded-xl shadow-lg gap-6">
       {coin && (
         <div className="w-1/3 flex flex-col items-center gap-6">
           <Image
