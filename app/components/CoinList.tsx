@@ -17,20 +17,20 @@ type CoinListProps = {
 
 export default function CoinList({ coin }: CoinListProps) {
   return (
-    <div className="flex flex-col items-center w-full h-svh bg-white p-8 rounded-xl shadow-lg gap-6">
+    <div className="flex flex-col items-center w-full h-svh bg-background p-8 rounded-xl shadow-lg gap-6">
       {coin && (
-        <div className="w-1/3 flex flex-col items-center gap-6">
+        <div className="w-full flex flex-col bg-#1C1917 items-center gap-6">
           <Image
             src={coin.image.large}
             alt="Coin Image"
-            width={200}
-            height={200}
+            width={500}
+            height={500}
             className="rounded-lg shadow-lg"
           />
           <p className="text-primary text-4xl font-bold">
             ${coin.market_data.current_price.usd}
           </p>
-          <div className="p-6 bg-background rounded-lg overflow-auto w-full border border-gray-300 shadow-md max-h-[200px]">
+          <div className="p-6 bg-white rounded-lg overflow-auto w-full border border-gray-300 shadow-md max-h-[200px]">
             <p className="text-lg text-gray-800">
               {coin.description.en || "No description available."}
             </p>

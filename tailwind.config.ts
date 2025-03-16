@@ -12,8 +12,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        blueprint: "#131a33", // Midnight blue
-        background: "e0e1dd", 
+        
+        background: "#1C1917", 
         accent: "#131a33", // Midnight blue
         primary: "#ffd700", // Gold
         secondary: "#4db5ff", // Electric blue
