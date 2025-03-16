@@ -40,9 +40,9 @@ export default function CoinList({ coin }: CoinListProps) {
 
       <div className="w-2/3 flex justify-center items-center">
         {coin && (
-          <div className="w-full h-[600px] md:h-[300px] bg-gray-50 rounded-lg shadow-lg p-4">
+          
             <CoinChart coinId={coin.id} />
-          </div>
+         
         )}
       </div>
     </div>

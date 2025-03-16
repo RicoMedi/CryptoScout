@@ -31,6 +31,7 @@ interface ChartData {
     data: number[];
     borderColor: string;
     backgroundColor: string;
+    fill: boolean;
     tension: number;
     pointRadius: number;
   }[];
@@ -59,6 +60,7 @@ export default function CoinChart({ coinId }: { coinId: string }) {
             label: "Price (USD)",
             data: prices.map((price: [number, number]) => price[1]),
             borderColor: "rgb(75, 192, 192)",
+            fill:false,
             backgroundColor: "rgba(75, 192, 192, 0.2)",
             tension: 0.3,
             pointRadius: 2,
@@ -77,5 +79,5 @@ export default function CoinChart({ coinId }: { coinId: string }) {
     <div>
       <Line data={chartData}/>
     </div>
-  );
+  )
 }
