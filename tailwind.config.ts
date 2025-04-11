@@ -12,7 +12,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        
         background: "#BEF264", 
         accent: "#131a33", // Midnight blue
         primary: "#ffd700", // Gold

@@ -15,7 +15,7 @@ export default function Nav({
 }: NavProps) {
   return (
     <header className="w-full p-6 mb-6 bg-black shadow-md flex justify-between items-center">
-      <h1 className="text-4xl text-white font-semibold font-serif text-background">CryptoScout</h1>
+      <h1 className="text-4xl text-white font-semibold font-serif bg-background">CryptoScout</h1>
       
       <div className="relative">
         <input
