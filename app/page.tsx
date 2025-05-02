@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import CoinList from "./components/coins/CoinList";
-import Nav from "./components/Nav";
+import { Nav } from "./components/Nav";
 import { getCoinsData } from "./lib/getCoinsData";
 import { getCoinData } from "./lib/getCoinData";
 

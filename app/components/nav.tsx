@@ -8,7 +8,7 @@ type NavProps = {
   fetchCoinDetails: (coinId: string) => void;
 };
 
-export default function Nav({
+export function Nav({
   searchTerm,
   setSearchTerm,
   filteredCoins,
