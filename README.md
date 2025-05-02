@@ -1,5 +1,4 @@
-# README for CryptoScout 
-
+# README for CryptoScout
 
 ## Overview
 

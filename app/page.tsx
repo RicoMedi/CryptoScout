@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import CoinList from "./components/CoinList";
-import Nav from "./components/nav";
+import CoinList from "./components/coins/CoinList";
+import Nav from "./components/Nav";
 import { getCoinsData } from "./lib/getCoinsData";
 import { getCoinData } from "./lib/getCoinData";
 
@@ -19,7 +19,6 @@ export default function Home() {
   const [coin, setCoin] = useState<Coin | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-
   useEffect(() => {
     fetchCoins();
   }, []);
@@ -27,7 +26,6 @@ export default function Home() {
   useEffect(() => {
     if (coinData.length > 0) {
       fetchCoinDetails(coinData[0].id);
-     
     }
   }, [coinData]);
 
@@ -44,7 +42,6 @@ export default function Home() {
     try {
       const data = await getCoinData(coinId);
       setCoin(data);
-      
     } catch {
       console.error("Failed to fetch coin details.");
     }
@@ -55,14 +52,16 @@ export default function Home() {
   );
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-background">
+    <div className="flex flex-col w-full min-h-screen bg-gradient-to-br from-[#232336] via-[#18181b] to-[#2d2e3e]">
       <Nav
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         filteredCoins={filteredCoins}
         fetchCoinDetails={fetchCoinDetails}
       />
-      <CoinList coin={coin} />
+      <main className="flex-1 flex flex-col items-center justify-center px-2 sm:px-6 py-8">
+        <CoinList coin={coin} />
+      </main>
     </div>
   );
 }

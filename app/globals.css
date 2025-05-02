@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --background: #18181b;
+  --card-bg: rgba(36, 37, 46, 0.95);
+  --primary: #7f5af0;
+  --secondary: #72757e;
+  --text: #f8fafc;
+  --danger: #ff5470;
+  --border: #232336;
+  --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+body {
+  font-family: "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+header {
+  border-radius: 0 !important;
+}
 
 @layer utilities {
   .no-scrollbars {
@@ -12,5 +33,19 @@
     width: 0px;
     background: transparent;
   }
+  .glass {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow);
+    border-radius: 1.5rem;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .card {
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+    border-radius: 1.5rem;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
 }
-

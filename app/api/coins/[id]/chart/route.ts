@@ -1,23 +1,24 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, context: { params: { id: string } }) {
+  const { params } = await context;
+
   try {
-    const url = `https://api.coingecko.com/api/v3/coins/${params.id}/market_chart?vs_currency=usd&days=7`; // or other period, like '30' for 30 days
+    const url = `https://api.coingecko.com/api/v3/coins/${params.id}/ohlc?vs_currency=usd&days=30`;
     const { data } = await axios.get(url, {
       headers: {
         Accept: "application/json",
-        'x-cg-demo-api-key': process.env.CRYPTO_API_KEY ?? "",
+        "x-cg-demo-api-key": process.env.CRYPTO_API_KEY ?? "",
       },
     });
 
-    const prices = data.prices.map((price: [number, number]) => price); // [timestamp, price]
-
-    return NextResponse.json({ prices });
+    // data is an array of [timestamp, open, high, low, close]
+    return NextResponse.json({ ohlc: data });
   } catch (error) {
-    console.error("Error fetching coin chart data:", error);
+    console.error("Error fetching coin OHLC data:", error);
     return NextResponse.json(
-      { error: "Failed to fetch coin chart data" },
+      { error: "Failed to fetch coin OHLC data" },
       { status: 500 }
     );
   }
