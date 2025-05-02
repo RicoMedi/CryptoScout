@@ -16,7 +16,6 @@ export default function CoinChart({ coinId }: { coinId: string }) {
 
   useEffect(() => {
     fetchOhlc(coinId);
-    // eslint-disable-next-line
   }, [coinId]);
 
   async function fetchOhlc(coinId: string) {
