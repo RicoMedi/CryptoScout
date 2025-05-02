@@ -73,7 +73,7 @@ types/
    npm install
    ```
 2. **Set up environment variables:**
-   - Create a `.env.local` file and add your CoinGecko API key:
+   - Create a `.env` file and add your CoinGecko API key:
      ```
      CRYPTO_API_KEY=your_coingecko_api_key
      ```
