@@ -1,5 +1,5 @@
 # CryptoScout
-
+Deployed Link: https://cryptosco.netlify.app/
 ## Overview
 
 CryptoScout is a modern cryptocurrency tracker built with Next.js, TypeScript, and Tailwind CSS. It allows users to search, view, and track cryptocurrency prices, along with detailed coin information and interactive candlestick price charts. The app fetches real-time data from the CoinGecko API.
